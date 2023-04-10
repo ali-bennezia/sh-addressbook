@@ -1,4 +1,5 @@
 # Remove entries
+# 0
 
 QUERIES=""
 RESULTS=""

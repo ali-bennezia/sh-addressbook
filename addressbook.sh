@@ -57,8 +57,17 @@ function request_option()
 
 function flush_selection()
 {
+	ENTRIES=`wc -l ${SROOT}data | cut -d" " -f1`
+	SELPATH=`get_selection_path`
+	ENABLEIFNOENTRIES=`head -n 2 "$SELPATH" | tail -n 1 | cut -c3-`
+	if [ $ENTRIES -eq 0 -a $ENABLEIFNOENTRIES -eq 0 ]; then
+		echo "Option unavailable. There are currently no records on the address book."
+		read
+		return 1
+	fi
 	. `get_selection_path`
 	execute_option
+	return 0
 }
 
 function check_data_file()
@@ -68,6 +77,7 @@ function check_data_file()
 		echo "Error: Couldn't create data file."
 		exit
 	fi
+	return 0
 }
 
 SROOT="./"
