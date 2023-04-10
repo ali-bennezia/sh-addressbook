@@ -2,14 +2,6 @@
 
 . ./records.lib.sh
 
-# SROOT="./"
-# add_record Jean Francis jeanfr@gmail.com "8 rue de la marre"
-# search_records "Jean"
-# does_record_exist "Jean:Francis:jeanfr@gmail.com:8 rue de la marre"
-# RES=$?
-# echo $RES
-# exit
-
 SELECTION="menu"
 
 function display_menu()
@@ -27,6 +19,12 @@ function display_menu()
 	done
 }
 
+BREAK=0
+function interrupt()
+{
+	BREAK=1
+}
+
 function get_menu_options_count()
 {
 	echo `ls ./menu | wc -l`
@@ -40,14 +38,13 @@ function get_selection_path()
 
 function request_option()
 {
-	while :
+	while [ "$BREAK" -ne "1" ]
 	do
-		echo -n "Choose an option (q to quit) : "
+		echo -n "Choose an option (CTRL+C to quit) : "
 		read SELECTION
-		if [ "$SELECTION" = "q" ]; then
-			clear
-			exit
-		fi
+	
+		[ "$BREAK" -eq 1 ] && break
+
 		SELECTION=`echo "$SELECTION" | tr -d [a-zA-Z][:space:]`
 		[ -z "$SELECTION" ] && SELECTION=0
 		if [ "$SELECTION" -lt 1 -o "$SELECTION" -gt `get_menu_options_count` ]; then
@@ -74,12 +71,20 @@ function check_data_file()
 }
 
 SROOT="./"
+trap interrupt 2
 check_data_file
 while :
 do
 	# SROOT="./"
 	display_menu
 	request_option
+
+	if [ "$BREAK" -eq 1 ]; then
+		BREAK=0
+		clear
+		exit
+	fi
+
 	# SROOT="./../"
 	flush_selection
 	# read

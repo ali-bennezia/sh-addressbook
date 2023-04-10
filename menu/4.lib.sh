@@ -22,17 +22,18 @@ execute_option()
 {
 	echo "== Edit entries =="
 
-	echo "Enter search queries to narrow down the results for the entry you would like to edit. (q to exit, m to go to menu, c to clear search queries)"
+	echo "Enter search queries to narrow down the results for the entry you would like to edit. (CTRL+C for menu, c to clear search queries)"
 
-	while :
+	while [ $BREAK -ne 1 ]
 	do
 		display_search_results
 
 		if [ $RESCOUNT -eq 1 ]; then
-			echo "Would you like to edit this record ? (y/n) (q to exit, m to go to menu)"
+			echo "Would you like to edit this record ? (y/n) (CTRL+C for menu)"
 
 			read REMINPUT
-			while :
+			[ $BREAK -eq 1 ] && BREAK=0 && return 0
+			while [ $BREAK -ne 1 ]
 			do
 				if [ "$REMINPUT" = "y" ]; then
 					echo "$RESULTS"
@@ -44,6 +45,7 @@ execute_option()
 						DEFAULTVAL=`echo "$RESULTS" | cut -d: -f$index`
 						echo -n "$i [ $DEFAULTVAL ] "
 						read EDITVAL
+						[ $BREAK -eq 1 ] && BREAK=0 && return 0
 						if [ -z "$EDITVAL" ]; then
 							NEWRECORD="${NEWRECORD}`echo "$RESULTS" | cut -d: -f$index`:"
 							index=`expr $index + 1`
@@ -60,10 +62,6 @@ execute_option()
 					break
 				elif [ "$REMINPUT" = "n" ]; then
 					break
-				elif [ "$REMINPUT" = "q" ]; then
-					exit
-				elif [ "$REMINPUT" = "m" ]; then
-					return 0
 				fi
 			done
 
@@ -74,11 +72,8 @@ execute_option()
 		fi
 
 		read QUERIES
-		if [ "$QUERIES" = "q" ]; then
-			exit
-		elif [ "$QUERIES" = "m" ]; then
-			return 0
-		elif [ "$QUERIES" = "c" ]; then
+		[ $BREAK -eq 1 ] && BREAK=0 && return 0
+		if [ "$QUERIES" = "c" ]; then
 			QUERIES=""
 			RESULTS=""
 		fi

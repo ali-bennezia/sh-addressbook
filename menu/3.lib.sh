@@ -22,18 +22,20 @@ execute_option()
 {
 	echo "== Remove entries =="
 
-	echo "Enter search queries to narrow down the results for the entry you would like to remove. (q to exit, m to go to menu, c to clear search queries)"
+	echo "Enter search queries to narrow down the results for the entry you would like to remove. (CTRL+C for menu, c to clear search queries)"
 
-	while :
+	while [ $BREAK -ne 1 ]
 	do
 		display_search_results
 
 		if [ $RESCOUNT -eq 1 ]; then
-			echo "Would you like to remove this record ? (y/n) (q to exit, m to go to menu)"
+			echo "Would you like to remove this record ? (y/n) (CTRL+C for menu)"
 
 			read REMINPUT
-			while :
+
+			while [ $BREAK -ne 1 ]
 			do
+				[ $BREAK -eq 1 ] && BREAK=0 && return 0
 				if [ "$REMINPUT" = "y" ]; then
 					sed -i "/$RESULTS/d" ${SROOT}data
 					break
@@ -53,6 +55,7 @@ execute_option()
 		fi
 
 		read QUERIES
+		[ $BREAK -eq 1 ] && BREAK=0 && return 0
 		if [ "$QUERIES" = "q" ]; then
 			exit
 		elif [ "$QUERIES" = "m" ]; then

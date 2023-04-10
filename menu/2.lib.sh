@@ -9,19 +9,15 @@ flush_record()
 execute_option()
 {
 	echo "== Add entries =="
-	echo "q to exit, m to show menu"
-	while :
+	echo "Enter data for the new entry (CTRL+C for menu)"
+	while [ $BREAK -ne 1 ]
 	do
 		ARECORD=""
 		for item in "First name" "Last name" "Address"
 		do
 			echo -n "`echo $item` : "
 			read INPUT
-			if [ "$INPUT" = "q" ]; then
-				exit
-			elif [ "$INPUT" = "m" ]; then
-				return 0;
-			fi
+			[ "$BREAK" -eq 1 ] && BREAK=0 && return 0
 
 			ARECORD="${ARECORD}${INPUT}:"
 		done
@@ -35,10 +31,11 @@ execute_option()
 		if [ $NAMEEXISTS -eq 0 ]; then
 			flush_record "$ARECORD"
 		else
-			while [ "$CHOICE" != "y" -a "$CHOICE" != "n" ]
+			while [ "$CHOICE" != "y" -a "$CHOICE" != "n" -a $BREAK -ne 1 ]
 			do
-				echo "The given name is already present in the records. Would you like to overwrite to existent one ? (y/n)"
+				echo "The given name is already present in the records. Would you like to overwrite the existent one ? (y/n) (CTRL+C for menu)"
 				read CHOICE
+				[ "$BREAK" -eq 1 ] && BREAK=0 && return 0
 			done
 			if [ "$CHOICE" = "n" ]; then
 				flush_record "$ARECORD"

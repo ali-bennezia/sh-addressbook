@@ -7,14 +7,13 @@ execute_option()
 	clear
 	echo "-- Search --"
 	
-	while :
+	while [ $BREAK -ne 1 ]
 	do
-		echo -n "Search query (q to exit, m to show menu ) : "
+		echo -n "Search query (CTRL+C for menu) : "
 		read INPUT
 
-                if [ "$INPUT" = "q" ]; then
-                	exit
-                elif [ "$INPUT" = "m" ]; then
+                if [ $BREAK -eq 1 ]; then
+			BREAK=0
                 	return 0;
                 fi
 
