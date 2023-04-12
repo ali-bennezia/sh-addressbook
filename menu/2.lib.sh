@@ -14,7 +14,7 @@ execute_option()
 	while [ $BREAK -ne 1 ]
 	do
 		ARECORD=""
-		for item in "First name" "Last name" "Address"
+		for item in "First name" "Last name" "Email" "Address"
 		do
 			echo -n "`echo $item` : "
 			read INPUT
