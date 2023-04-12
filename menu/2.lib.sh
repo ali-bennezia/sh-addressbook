@@ -29,6 +29,12 @@ execute_option()
 		is_name_in_records "$FNAME" "$LNAME"
 		NAMEEXISTS="$?"
 
+		request_confirmation
+		CFRM=$?
+
+		[ "$BREAK" -eq 1 ] && BREAK=0 && return 0
+		[ $CFRM -eq 0 ] && continue
+
 		if [ $NAMEEXISTS -eq 0 ]; then
 			flush_record "$ARECORD"
 		else

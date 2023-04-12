@@ -4,6 +4,20 @@
 
 SELECTION="menu"
 
+function request_confirmation()
+{
+	while [ $BREAK -ne 1 ]
+	do
+		echo "Confirm ? (y/n)"
+		read CONFIRM
+		if [ "$CONFIRM" = "y" ]; then
+			return 1
+		elif [ "$CONFIRM" = "n" ]; then
+			return 0
+		fi
+	done
+}
+
 function display_menu()
 {
 	clear

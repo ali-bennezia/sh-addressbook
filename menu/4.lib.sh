@@ -58,6 +58,13 @@ execute_option()
 					done
 					
 					NEWRECORD=`echo "$NEWRECORD" | sed s/.$//`
+					
+					request_confirmation
+					CFRM=$?
+
+					[ "$BREAK" -eq 1 ] && BREAK=0 && return 0
+					[ $CFRM -eq 0 ] && continue
+					
 					sed -i "s/$RESULTS/$NEWRECORD/" ${SROOT}data	
 
 					break

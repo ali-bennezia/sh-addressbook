@@ -38,6 +38,13 @@ execute_option()
 			do
 				[ $BREAK -eq 1 ] && BREAK=0 && return 0
 				if [ "$REMINPUT" = "y" ]; then
+				
+					request_confirmation
+					CFRM=$?
+
+					[ "$BREAK" -eq 1 ] && BREAK=0 && return 0
+					[ $CFRM -eq 0 ] && continue
+				
 					sed -i "/$RESULTS/d" ${SROOT}data
 					break
 				elif [ "$REMINPUT" = "n" ]; then
