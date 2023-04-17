@@ -8,7 +8,7 @@ An address book written in shell, as an exercise as required: https://www.shells
 - Edit
 
 ## Usage
-Go to either menu-based (interactive) or cli-based, depending on the version you'd like to try, then execute addressbook.sh
+Go to either menu-based (interactive) or cli-based, depending on the version you'd like to try, then execute the 'addressbook.sh' file.
 Use CTRL+C to exit an option, or exit the address book entirely.
 
 ### Options
