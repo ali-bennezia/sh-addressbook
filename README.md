@@ -2,8 +2,10 @@
 An address book written in shell, as an exercise as required: https://www.shellscript.sh/exercises.html
 
 ## Features
-- Search option
-- Add records
-- Remove records
+- Search
+- Add
+- Remove
+- Edit
 
-Still a work in progress.
+## Usage
+Go to either menu-based or cli-based, depending on the version you'd like to try, then execute addressbook.sh
