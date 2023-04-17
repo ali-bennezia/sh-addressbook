@@ -9,7 +9,7 @@ An address book written in shell, as an exercise as required: https://www.shells
 
 ## Usage
 Go to either menu-based (interactive) or cli-based, depending on the version you'd like to try, then execute the 'addressbook.sh' file.
-Use CTRL+C to exit an option, or exit the address book entirely.
+Use CTRL+C to exit an option, or to exit the address book entirely.
 
 ### Options
 Using the CLI version, you can use the -o option to specify a menu option to launch directly, using its index.
