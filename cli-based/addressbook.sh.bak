@@ -11,6 +11,25 @@ function usage()
 	exit 1
 }
 
+while getopts ":o:" option; do
+
+	case $option in
+		o)
+			OPT="${OPTARG}"
+			OPT=`echo "$OPT" | tr -d "[A-Z][a-z][:space:]"`
+			if [ -z "$OPT" ] || [ "$OPT" -lt 1 ] || "$OPT" -gt `get_menu_options_count`; then
+				usage
+			fi
+			SELECTION="$OPT"
+			flush_selection
+			;;
+		*)
+			usage
+			;;
+	esac
+
+done
+
 . ./records.lib.sh
 
 SELECTION="menu"
@@ -99,25 +118,6 @@ function check_data_file()
 	fi
 	return 0
 }
-
-while getopts ":o:" option; do
-
-	case $option in
-		o)
-			OPT="${OPTARG}"
-			OPT=`echo "$OPT" | tr -d "[A-Z][a-z][:space:]"`
-			if [ -z "$OPT" ] || [ "$OPT" -lt 1 ] || [ "$OPT" -gt `get_menu_options_count` ]; then
-				usage
-			fi
-			SELECTION="$OPT"
-			flush_selection
-			;;
-		*)
-			usage
-			;;
-	esac
-
-done
 
 SROOT="./"
 trap interrupt 2
