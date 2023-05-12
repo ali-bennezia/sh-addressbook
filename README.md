@@ -1,5 +1,5 @@
 # Shell addressbook
-An address book written in shell, as an exercise as required: https://www.shellscript.sh/exercises.html
+An address book written in shell, as required for an exercise (https://www.shellscript.sh/exercises.html)
 
 ## Features
 - Search
